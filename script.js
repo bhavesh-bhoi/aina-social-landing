@@ -3,6 +3,22 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // Sticky nav gets a border once scrolled
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 10);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const items = $$('.reveal, .rise, #steps');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+    items.forEach(el => io.observe(el));
+  } else {
+    items.forEach(el => el.classList.add('in'));
+  }
 
   // Gift cards: flip on tap, with a confetti burst
   const colors = ['#b5191f', '#f2b8ba', '#06312e', '#ffffff', '#e8a33d'];
@@ -18,19 +34,4 @@
       setTimeout(() => c.remove(), 1000);
     }
   }));
-
-  // Count-up numbers when the portfolio scrolls into view
-  const fmt = n => n.toLocaleString('en-IN');
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    io.unobserve(e.target);
-    const el = e.target, end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now();
-    const tick = t => {
-      const p = Math.min((t - t0) / 1400, 1);
-      el.textContent = fmt(Math.round(end * (1 - Math.pow(1 - p, 3)))) + suf;
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }), { threshold: 0.6 });
-  $$('[data-count]').forEach(el => io.observe(el));
 })();
