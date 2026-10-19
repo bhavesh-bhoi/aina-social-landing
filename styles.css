@@ -236,3 +236,8 @@ details p{padding:0 24px 22px;color:var(--ink-soft)}
   .steps::after{transform:scaleX(1)}
 }
 
+
+/* One gift only: the rest lock once one is opened */
+.gift.locked{opacity:.4;filter:grayscale(.7);cursor:not-allowed;animation:none;transition:opacity .4s,filter .4s}
+.gift.locked:hover .gift__inner{transform:none}
+.gift.open{cursor:default}
