@@ -39,4 +39,19 @@
       setTimeout(() => c.remove(), 1000);
     }
   }));
+
+  // Appointment popup: every button that points at the form opens it in a modal
+  const modal = document.getElementById('formModal'), frame = document.getElementById('formFrame');
+  if (modal && modal.showModal && frame) {
+    const closeModal = () => modal.close();
+    modal.addEventListener('close', () => { frame.src = 'about:blank'; document.documentElement.classList.remove('modal-open'); });
+    document.getElementById('formClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    $$('a[data-form]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      frame.src = a.href;
+      document.documentElement.classList.add('modal-open');
+      modal.showModal();
+    }));
+  }
 })();
