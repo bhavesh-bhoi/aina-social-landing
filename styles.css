@@ -241,3 +241,18 @@ details p{padding:0 24px 22px;color:var(--ink-soft)}
 .gift.locked{opacity:.4;filter:grayscale(.7);cursor:not-allowed;animation:none;transition:opacity .4s,filter .4s}
 .gift.locked:hover .gift__inner{transform:none}
 .gift.open{cursor:default}
+
+/* What MFDs want: sticky heading + numbered list */
+.goals__inner{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start}
+.goals__head{position:sticky;top:110px}
+.goals__head h2{margin-bottom:28px}
+.goals__list{list-style:none;border-top:2px solid var(--ink)}
+.goals__list li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:26px 0;border-bottom:1.5px solid var(--line);transition:padding-left .3s var(--ease)}
+.goals__list li:hover{padding-left:10px}
+.goals__list span{font-family:var(--head);font-weight:700;font-size:28px;line-height:1.1;color:var(--red)}
+.goals__list h3{font-family:var(--head);font-size:23px;line-height:1.2;margin-bottom:6px}
+.goals__list p{color:var(--ink-soft);max-width:460px}
+@media (max-width:900px){
+  .goals__inner{grid-template-columns:1fr;gap:36px}
+  .goals__head{position:static}
+}
